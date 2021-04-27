@@ -31,6 +31,8 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::get('/voyant', [VoyantController::class, 'create'])->name('voyant');
     Route::resource('gourou', 'GourouController');
+    Route::resource('voyants', 'VoyantController');
+
 
 
 
