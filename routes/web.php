@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/withdraw', [TransactionController::class, 'withdraw'])->name('withdraw');
 
     Route::get('/voyant', [VoyantController::class, 'create'])->name('voyant');
+    Route::resource('gourou', 'GourouController');
+
 
 
 });
