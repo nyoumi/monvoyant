@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/deposit', [TransactionController::class, 'deposit'])->name('deposit');
     Route::post('/withdraw', [TransactionController::class, 'withdraw'])->name('withdraw');
 
-    Route::get('/voyant', [VoyantController::class, 'create'])->name('voyant');
+    Route::get('/voyant', [GourouController::class, 'create'])->name('voyant');
 
 
 });
