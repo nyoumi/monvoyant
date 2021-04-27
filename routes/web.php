@@ -3,6 +3,8 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\VoyantController;
+use App\Http\Controllers\GourouController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
