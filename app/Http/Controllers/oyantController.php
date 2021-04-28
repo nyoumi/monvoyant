@@ -160,7 +160,7 @@ class voyantController extends Controller
     {
         // delete
         $voyant = voyant::find($id);
-        $voyant->delete();
+        $voyant->delete();   
 
         // redirect
         Session::flash('message', 'Voyant supprimé avec succès!');
