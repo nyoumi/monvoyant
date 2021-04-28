@@ -50,4 +50,7 @@
             </div>
         </div>
     </div>
+    @if(!empty(Auth::user()->id))
+                        @include('chat::directChat')
+            @endif
 </x-app-layout>

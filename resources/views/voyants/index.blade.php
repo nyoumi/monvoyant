@@ -67,4 +67,8 @@
 
 </div>
 </body>
+@if(!empty(Auth::user()->id))
+                        @include('chat::directChat')
+            @endif
+
 </html>
