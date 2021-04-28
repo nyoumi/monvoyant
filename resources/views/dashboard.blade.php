@@ -13,6 +13,8 @@
                         <p>Balance: {{ $accountUser->balance }}</p>
                     @endisset
                 </div>
+                <a class="btn btn-small btn-success" style="margin-bottom:10px" href="{{ URL::to('voyants') }}">Voir les voyants </a>
+
             </div>
         </div>
         <div class="max-w-7xl mx-auto sm:px-6">

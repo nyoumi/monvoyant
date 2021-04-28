@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\voyantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/init-withdraw', [TransactionController::class, 'initWithdraw'])->name('initWith');
     Route::post('/deposit', [TransactionController::class, 'deposit'])->name('deposit');
     Route::post('/withdraw', [TransactionController::class, 'withdraw'])->name('withdraw');
+    Route::resource('voyants', 'App\Http\Controllers\voyantController');
+
 
 });
 
