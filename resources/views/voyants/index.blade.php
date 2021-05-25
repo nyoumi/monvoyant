@@ -23,6 +23,11 @@
 @if (Session::has('message'))
     <div class="alert alert-info">{{ Session::get('message') }}</div>
 @endif
+@if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
 
 <table class="table table-striped table-bordered">
     <thead>
@@ -43,7 +48,7 @@
             <td>{{ $value->note }}</td>
 
             <!-- we will also add show, edit, and delete buttons -->
-                            <td>
+            <td>
 
                 <!-- delete the voyant (uses the destroy method DESTROY /voyants/{id} -->
                 <!-- we will add this later since its a little more complicated than the other two buttons -->
@@ -51,12 +56,20 @@
 
                 <!-- show the voyant (uses the show method found at GET /voyants/{id} -->
                 <a class="btn btn-small btn-success" style="margin-bottom:10px" href="{{ URL::to('voyants/' . $value->id) }}">Voir </a>
+                @can('voyant-edit')
 
                 <!-- edit this voyant (uses the edit method found at GET /voyants/{id}/edit -->
                 <a class="btn btn-small btn-info" style="margin-bottom:10px" href="{{ URL::to('voyants/' . $value->id . '/edit') }}">Modifier</a>
-                {{ Form::open(array('url' => 'voyants/' . $value->id, 'class' => 'pull-right')) }}
+                @endcan
+                @csrf
+                @method('DELETE')
+                @can('voyant-delete')
+
+                    {{ Form::open(array('url' => 'voyants/' . $value->id, 'class' => 'pull-right')) }}
                     {{ Form::hidden('_method', 'DELETE') }}
                     {{ Form::submit('Supprimer', array('class' => 'btn btn-danger')) }}
+                @endcan
+
                 {{ Form::close() }}
                 </td>
 

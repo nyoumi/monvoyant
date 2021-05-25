@@ -17,6 +17,14 @@ use Illuminate\Support\Facades\Redirect;
 
 class voyantController extends Controller
 {
+
+    function __construct()
+    {
+         $this->middleware('permission:voyant-list|voyant-create|voyant-edit|voyant-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:voyant-create', ['only' => ['create','store']]);
+         $this->middleware('permission:voyant-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:voyant-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -25,11 +33,14 @@ class voyantController extends Controller
     public function index()
     {
         // get all the voyants
-        $voyants = Voyant::all();
+        //$voyants = Voyant::all();
+        $voyants = Voyant::latest()->paginate(5);
+
 
         // load the view and pass the voyants
-        return View::make('voyants.index')
+        return View::make('voyants.index',compact('voyants'))
             ->with('voyants', $voyants);
+           //->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
 

@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\voyantController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoyantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,16 +20,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => 'auth'], function(){
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/init-deposit', [TransactionController::class, 'initDeposit'])->name('initDept');
-    Route::get('/init-withdraw', [TransactionController::class, 'initWithdraw'])->name('initWith');
-    Route::post('/deposit', [TransactionController::class, 'deposit'])->name('deposit');
-    Route::post('/withdraw', [TransactionController::class, 'withdraw'])->name('withdraw');
-    Route::resource('voyants', 'App\Http\Controllers\voyantController');
-
-
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('voyants', VoyantController::class);
 });
-
-
 require __DIR__.'/auth.php';
