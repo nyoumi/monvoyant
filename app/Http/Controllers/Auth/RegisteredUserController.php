@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Account;
 
 class RegisteredUserController extends Controller
 {
@@ -44,6 +45,12 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
         $user->assignRole("client");
+                //Account creation
+        Account::create([
+            'user_id' => $user->id,
+            'token' => bcrypt($user->name),
+            'balance' => 0
+        ]);
 
 
         event(new Registered($user));

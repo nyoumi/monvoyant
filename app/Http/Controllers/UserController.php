@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 use Illuminate\Support\Arr;
+use App\Models\Account;
     
 class UserController extends Controller
 {
@@ -55,6 +56,12 @@ class UserController extends Controller
     
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
+                //Account creation
+                Account::create([
+                    'user_id' => $user->id,
+                    'token' => bcrypt($user->name),
+                    'balance' => 0
+                ]);
     
         return redirect()->route('users.index')
                         ->with('success','User created successfully');

@@ -33,8 +33,8 @@ class voyantController extends Controller
     public function index()
     {
         // get all the voyants
-        //$voyants = Voyant::all();
-        $voyants = Voyant::latest()->paginate(5);
+        $voyants = Voyant::all();
+        //$voyants = Voyant::latest()->paginate(5);
 
 
         // load the view and pass the voyants

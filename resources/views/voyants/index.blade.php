@@ -10,12 +10,16 @@
 <nav class="navbar navbar-inverse">
     <div class="navbar-header">
         <a class="navbar-brand" href="{{ URL::to('voyants') }}">voyants</a>
+
     </div>
     <ul class="nav navbar-nav">
         <li><a href="{{ URL::to('voyants') }}">Voir tous les voyants</a></li>
         <li><a href="{{ URL::to('voyants/create') }}">Créer un voyant</a>
+
     </ul>
+
 </nav>
+<a class="btn btn-primary" href="{{ route('dashboard') }}"> Accueil</a>
 
 <h1>Tous les voyants</h1>
 

@@ -15,8 +15,9 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "laravelcollective/html": "^6.2",
-        "musonza/chat": "^4.5",
+        "musonza/chat": "^4.6",
         "spatie/laravel-permission": "^4.0",
+        "stripe/stripe-php": "^7.79",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {

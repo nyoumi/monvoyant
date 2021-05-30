@@ -13,7 +13,9 @@
     </div>
     <ul class="nav navbar-nav">
         <li><a href="{{ URL::to('voyants') }}">Voir tous les voyants</a></li>
-        <li><a href="{{ URL::to('voyants/create') }}">Create a voyant</a>
+        @can('role-create')
+        <li><a href="{{ URL::to('voyants/create') }}">Ajouter un voyant</a>
+        @endcan
     </ul>
 </nav>
 
@@ -26,7 +28,15 @@
             <strong>Note Globale:</strong> {{ $voyant->note }}
         </p>
         <br><br>
+        @can('role-create')
         <a class="btn btn-small btn-info" href="{{ URL::to('voyants/' . $voyant->id . '/edit') }}">Modifier</a>
+        <a class="btn btn-small btn-info" href="{{ URL::to('chat/' . $voyant->id) }}">Contacter</a>
+
+       @else
+        <a class="btn btn-small btn-info" href="{{ URL::to('chat/' . $voyant->id) }}">Contacter</a>
+
+        @endcan
+        
 
     </div>
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3cafead16b0fa027e69a4e50595c7352",
+    "content-hash": "7431ea480ee4da39ae25d3b9f0243cbe",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1617,16 +1617,16 @@
         },
         {
             "name": "musonza/chat",
-            "version": "v4.5.0",
+            "version": "v4.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/musonza/chat.git",
-                "reference": "a2293493b0a2c6360145c1a0b12e5e1ca7562022"
+                "reference": "450eb344785a335810030f238c337c6427001054"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/musonza/chat/zipball/a2293493b0a2c6360145c1a0b12e5e1ca7562022",
-                "reference": "a2293493b0a2c6360145c1a0b12e5e1ca7562022",
+                "url": "https://api.github.com/repos/musonza/chat/zipball/450eb344785a335810030f238c337c6427001054",
+                "reference": "450eb344785a335810030f238c337c6427001054",
                 "shasum": ""
             },
             "require": {
@@ -1676,7 +1676,7 @@
             ],
             "support": {
                 "issues": "https://github.com/musonza/chat/issues",
-                "source": "https://github.com/musonza/chat/tree/v4.5.0"
+                "source": "https://github.com/musonza/chat/tree/v4.6.0"
             },
             "funding": [
                 {
@@ -1684,7 +1684,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-09-19T12:17:18+00:00"
+            "time": "2021-05-12T15:45:03+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -2688,6 +2688,67 @@
                 }
             ],
             "time": "2021-03-22T18:38:29+00:00"
+        },
+        {
+            "name": "stripe/stripe-php",
+            "version": "v7.79.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stripe/stripe-php.git",
+                "reference": "e17e85bc13dfa531bdfb3d3719d3810431d104f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/e17e85bc13dfa531bdfb3d3719d3810431d104f9",
+                "reference": "e17e85bc13dfa531bdfb3d3719d3810431d104f9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "2.17.1",
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "^5.7",
+                "squizlabs/php_codesniffer": "^3.3",
+                "symfony/process": "~3.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Stripe\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stripe and contributors",
+                    "homepage": "https://github.com/stripe/stripe-php/contributors"
+                }
+            ],
+            "description": "Stripe PHP Library",
+            "homepage": "https://stripe.com/",
+            "keywords": [
+                "api",
+                "payment processing",
+                "stripe"
+            ],
+            "support": {
+                "issues": "https://github.com/stripe/stripe-php/issues",
+                "source": "https://github.com/stripe/stripe-php/tree/v7.79.0"
+            },
+            "time": "2021-05-19T19:30:23+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
