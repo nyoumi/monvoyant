@@ -152,6 +152,21 @@
 	font-size: 10px;
 	color: rgba(255,255,255,0.6);
 	}
+	.error_warning {
+  opacity: 0;
+  animation: blinking 1s linear infinite;
+}
+
+@keyframes blinking {
+  from,
+  49.9% {
+    opacity: 0;
+  }
+  50%,
+  to {
+    opacity: 1;
+  }
+}
 	.video_cam{
 		margin-left: 50px;
 		margin-top: 5px;
@@ -217,6 +232,12 @@
 	}
 	.msg_orriginal_time{
 		display: none;
+	}
+	.error_warning{
+		width: 100%;
+    text-align: center;
+    color: #e96767;
+    margin-bottom: 5px;
 	}
 	.action_menu{
 		z-index: 1;
@@ -345,10 +366,22 @@ function sendMessage() {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify(datas)
-}).then(res => res.json())
-  .then(res => console.log(res));
+}).then(res =>{
+	res.json().then(response =>{
+		console.log(response)
+		if(response.status!=1000){
+			$("#message_error").text(response.message)
+			setTimeout(function(){ 
+				$("#message_error").text('');
+				 }, 10000);
+				
+			
+		}
+  
        
-    }
+    })
+})
+}
 
         </script>
 	</head>
@@ -374,7 +407,7 @@ function sendMessage() {
 					</div>
 					
 					<div class="card-body contacts_body">
-						<ui class="contacts">
+						<ul class="contacts">
 						<li class="active">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
@@ -424,7 +457,7 @@ function sendMessage() {
 								</div>
 							</div>
 						</li>
-						</ui>
+						</ul>
 					</div>
 					
 					<div class="card-footer"></div>
@@ -478,6 +511,7 @@ function sendMessage() {
 							</div> -->
 						</div>
 						<div class="card-footer">
+							<div class="error_warning danger" id="message_error"> </div>
 							<div class="input-group">
 								<div class="input-group-append">
 									<span class="input-group-text attach_btn"></span>
