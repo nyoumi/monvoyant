@@ -14,7 +14,9 @@
     </div>
     <ul class="nav navbar-nav">
         <li><a href="{{ URL::to('voyants') }}">Voir tous les voyants</a></li>
+        @can('voyant-edit')
         <li><a href="{{ URL::to('voyants/create') }}">Créer un voyant</a>
+        @endcan
 
     </ul>
 
@@ -36,7 +38,7 @@
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
-            <td>ID</td>
+            
             <td>nom</td>
             <td>biographie</td>
             <td>note</td>
@@ -46,7 +48,7 @@
     <tbody>
     @foreach($voyants as $key => $value)
         <tr>
-            <td>{{ $value->id }}</td>
+           
             <td>{{ $value->name }}</td>
             <td>{{ $value->biography }}</td>
             <td>{{ $value->note }}</td>
