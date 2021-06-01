@@ -10,6 +10,7 @@ use App\Models\Voyant;
 use App\Models\User;
 use Chat;
 use Illuminate\Support\Arr;
+use App\Library\Services\Facturation;
 
 
 class ChatController extends Controller
@@ -46,23 +47,33 @@ class ChatController extends Controller
 
     }
 
-    public function sendMessage(Request $request){
-
+    public function sendMessage(Facturation $facturationServiceInstance,Request $request){
+        $status=1000;
+        $response='message envoyé';
         $conversation_id=$request->conversation_id;
         $message=$request->message;
-        $sender=$request->sender;
+        //$sender=$request->sender;
         //$user = User::find($sender);
         $conversation = Chat::conversations()->getById($conversation_id);
         $user = Auth::user();
-        
-        $message = Chat::message($message)
+        $withdraw=$facturationServiceInstance->withdraw(3);
+        if($withdraw["error"]==0){
+            $message = Chat::message($message)
             ->from($user)
             ->to($conversation)
             ->send();
+        }else{
+            $status=$withdraw["error"];
+            $response=$withdraw["message"];
+           
+
+        }
+        $balance=$withdraw["balance"];
 
             return response()->json([
-                'status' => 1000,
-                'message' => 'message envoyé',
+                'status' => $status,
+                'message' =>$response ,
+                'balance'=>$balance
             ]);
             
 
@@ -74,13 +85,19 @@ class ChatController extends Controller
         //$messages = Chat::conversations()->setParticipant($participant)->limit(5)->page(1)->get();
 
         $conversation = Chat::conversations()->getById($request->conversation_id);
-        $messages = Chat::conversation($conversation)->setParticipant($participant)->limit(5)->getMessages();
+        $messages = Chat::conversation($conversation)
+        ->setParticipant($participant)
+        ->limit(5)
+        ->setPaginationParams(['sorting' => 'desc'])
+        ->getMessages();
         $resultsMessages=[];
        // var_dump($messages ->lastPage);
 
          foreach ($messages as $key => $message) {
+           
             if( !($message ->is_seen)){
                 array_push($resultsMessages,$message);
+                Chat::message($message)->setParticipant($participant)->markRead();
             }
         } 
         //Chat::conversation($conversation)->setParticipant($participant)->readAll();

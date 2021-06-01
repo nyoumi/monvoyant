@@ -12,7 +12,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
-        <style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/fr.min.js" integrity="sha512-RAt2+PIRwJiyjWpzvvhKAG2LEdPpQhTgWfbEkFDCo8wC4rFYh5GQzJBVIFDswwaEDEYX16GEE/4fpeDNr7OIZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>		<style>
         body,html{
 			height: 100%;
 			margin: 0;
@@ -169,7 +170,7 @@
 		background-color: #82ccdd;
 		padding: 10px;
 		position: relative;
-        width: 80%;
+        min-width: 15%;
 
 	}
 	.msg_cotainer_send{
@@ -180,13 +181,16 @@
 		background-color: #78e08f;
 		padding: 10px;
 		position: relative;
+		
+		min-width: 15%;
 	}
 	.msg_time{
 		position: absolute;
 		left: 0;
-		bottom: -15px;
 		color: rgba(255,255,255,0.5);
 		font-size: 10px;
+		left: 15px;
+    	bottom: -18px;
 	}
 	.timer{
 		font-size:10px;
@@ -195,9 +199,10 @@
 	.msg_time_send{
 		position: absolute;
 		right:0;
-		bottom: -15px;
+		bottom: -18px;
 		color: rgba(255,255,255,0.5);
 		font-size: 10px;
+		right: 15px;
 	}
 	.msg_head{
 		position: relative;
@@ -209,6 +214,9 @@
 		color: white;
 		cursor: pointer;
 		font-size: 20px;
+	}
+	.msg_orriginal_time{
+		display: none;
 	}
 	.action_menu{
 		z-index: 1;
@@ -246,7 +254,9 @@
 	}
         </style>
         <script>
+			
             	$(document).ready(function(){
+					moment.locale('fr'); 
 
 var myVar = setInterval(refresh ,3000);
 function refresh() {
@@ -267,11 +277,15 @@ function refresh() {
 	res.json().then(response =>{
 		console.log(response.messages)
 		response.messages.forEach(message => {
+			var date = new Date(message.created_at);
+			date=moment(date).format('LTS');
 			$("#msg_card_body").append(
             '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg">'+
         '<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"'+
          'class="rounded-circle user_img_msg"></div>'+
-		'<div class="msg_cotainer">'+message.body+ '<span class="msg_time">8:40 AM, Today</span>'+
+		'<div class="msg_cotainer">'+message.body+
+			'<span class="msg_time">'+date+'</span>'+
+			'<span class="msg_orriginal_time">'+message.created_at+'</span>'+
         '</div></div>');
         $("#msg_card_body").animate({ scrollTop: $('#msg_card_body').prop("scrollHeight")}, 1000); 
 
@@ -288,24 +302,40 @@ function refresh() {
 $('#action_menu_btn').click(function(){
 	$('.action_menu').toggle();
 });
-    $('#send_btn').click(function () {
+$("#msg_area").on('keyup', function (e) {
+    if (e.key === 'Enter' || e.keyCode === 13) {
+		sendMessage();
+    }
+});
+$('#send_btn').click(function() {
+	sendMessage();
+} )
+	});
+function sendMessage() {
         //messages.push(message);
         var message=$('#msg_area').val();
+		
         $('#msg_area').val("");
-        console.log(message);
+        
+		var date_now = new Date();
+			date=moment(date_now).format('LTS');
         $("#msg_card_body").append(
-            '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg">'+
-        '<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"'+
-         'class="rounded-circle user_img_msg"></div>'+
-		'<div class="msg_cotainer">'+message+ '<span class="msg_time">8:40 AM, Today</span>'+
-        '</div></div>');
-        $("#msg_card_body").animate({ scrollTop: $('#msg_card_body').prop("scrollHeight")}, 1000); 
+            '<div class="d-flex justify-content-end mb-4">'+
+								'<div class="msg_cotainer_send">'+
+									message+
+									'<span class="msg_time_send">'+date+'</span>'+
+									'<span class="msg_orriginal_time">'+date_now+'</span>'+
+								'</div>'+
+								'<div class="img_cont_msg">'+
+                                '<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">'+
+								'</div>'+
+							'</div>');
+        $("#msg_card_body").animate({ scrollTop: $('#msg_card_body').prop("scrollHeight")}, 700); 
 
         var datas={       
 			 _token: "{{ csrf_token() }}",
 			 conversation_id: 52, 
-			 message:message, 
-			 sender:{{$user_id}}
+			 message:message
 			 };
 
         fetch('/sendMessage', {
@@ -318,14 +348,19 @@ $('#action_menu_btn').click(function(){
 }).then(res => res.json())
   .then(res => console.log(res));
        
-    })
-	});
+    }
+
         </script>
 	</head>
-	<!--Coded With Love By Mutiullah Samim-->
 	<body>
 		<div class="container-fluid h-100">
+			<div style="text-align: center; width:100%; margin-top: 20px;">
+				<a class="btn btn-primary" href="{{ route('dashboard') }}"> Accueil</a>
+			</div>  
+			
+
 			<div class="row justify-content-center h-100">
+				
 			@can('role-create')
 				<div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
 				
